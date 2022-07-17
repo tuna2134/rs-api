@@ -8,6 +8,14 @@ async fn greet(name: web::Path<String>) -> impl Responder {
     format!("Hello {name}!")
 }
 
+#[get("/create")]
+async fn create(pool: web::Data<MySqlPool>) -> impl Responder {
+    sqlx::query!("CREATE TABLE Test(userid BIGINT);")
+        .execute(pool)
+        .await?;
+    "Created"
+}
+
 #[actix_web::main] // or #[tokio::main]
 async fn main() -> std::io::Result<()> {
     let pool = MySqlPool::connect(&env::var("DATABASE_URL").unwrap()).await.unwrap();
