@@ -10,8 +10,8 @@ async fn greet(name: web::Path<String>) -> impl Responder {
 
 #[actix_web::main] // or #[tokio::main]
 async fn main() -> std::io::Result<()> {
-    let pool = MySqlPool::connect(&env::var("DATABASE_URL")?).await?;
-    HttpServer::new(|| {
+    let pool = MySqlPool::connect(&env::var("DATABASE_URL").unwrap()).await.unwrap();
+    HttpServer::new(move || {
         App::new()
             .route("/hello", web::get().to(|| async { "Hello World!" }))
             .service(greet)
