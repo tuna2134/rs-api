@@ -1,5 +1,6 @@
 use actix_web::{get, web, App, HttpServer, Responder};
 use sqlx::mysql::MySqlPool;
+use sqlx::Executor;
 
 use std::env;
 
