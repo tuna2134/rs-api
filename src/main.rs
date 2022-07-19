@@ -5,8 +5,8 @@ use std::env;
 
 #[get("/create")]
 async fn create(pool: web::Data<MySqlPool>) -> impl Responder {
-    let p = pool.lock();
-    p.execute("CREATE TABLE Test(userid BIGINT);").await.unwrap();
+    let pool2 = pool.clone();
+    pool2.execute("CREATE TABLE Hello(userid BIGINT);").await;
     "Created"
 }
 
