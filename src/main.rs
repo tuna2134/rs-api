@@ -18,7 +18,7 @@ async fn insert(pool: web::Data<MySqlPool>) -> impl Responder {
 
 #[get("/select")]
 async fn select(pool: web::Data<MySqlPool>) -> impl Responder {
-    let rows = pool.fetch("SELECT * FROM Hello;").await.unwrap();
+    let rows = pool.fetch_all("SELECT * FROM Hello;").await.unwrap();
     for row in rows {
         println!("{}", row.userid);
     }
