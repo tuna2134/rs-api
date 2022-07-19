@@ -3,16 +3,9 @@ use sqlx::mysql::MySqlPool;
 
 use std::env;
 
-#[get("/hello/{name}")]
-async fn greet(name: web::Path<String>) -> impl Responder {
-    format!("Hello {name}!")
-}
-
 #[get("/create")]
 async fn create(pool: web::Data<MySqlPool>) -> impl Responder {
-    sqlx::query!("CREATE TABLE Test(userid BIGINT);")
-        .execute(pool.lock().unwrap())
-        .await?;
+    pool.execute("CREATE TABLE Test(userid BIGINT);").await?;
     "Created"
 }
 
