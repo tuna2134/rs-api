@@ -16,6 +16,12 @@ async fn insert(pool: web::Data<MySqlPool>) -> impl Responder {
     "Created"
 }
 
+#[get("/select")]
+async fn insert(pool: web::Data<MySqlPool>) -> impl Responder {
+    println!(pool.fetch_all("SELECT * FROM Hello;").await);
+    "Created"
+}
+
 #[actix_web::main] // or #[tokio::main]
 async fn main() -> std::io::Result<()> {
     let pool = MySqlPool::connect(&env::var("DATABASE_URL").unwrap()).await.unwrap();
