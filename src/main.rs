@@ -10,12 +10,9 @@ async fn create(pool: web::Data<MySqlPool>) -> impl Responder {
     "Created"
 }
 
-#[get("/create2")]
-async fn create2(pool: web::Data<MySqlPool>) -> impl Responder {
-    let conn = pool.acquire();
-    sqlx::query!("CREATE TABLE IF NOT EXISTS Hello(userid BIGINT);")
-        .execute(conn)
-        .await;
+#[get("/insert")]
+async fn insert(pool: web::Data<MySqlPool>) -> impl Responder {
+    pool.execute("INSERT INTO Hello VALUES(928193829);").await;
     "Created"
 }
 
