@@ -10,6 +10,15 @@ async fn create(pool: web::Data<MySqlPool>) -> impl Responder {
     "Created"
 }
 
+#[get("/create2")]
+async fn create(pool: web::Data<MySqlPool>) -> impl Responder {
+    let conn = pool.acquire();
+    sqlx::query!("CREATE TABLE IF NOT EXISTS Hello(userid BIGINT);")
+        .execute(conn)
+        .await;
+    "Created"
+}
+
 #[actix_web::main] // or #[tokio::main]
 async fn main() -> std::io::Result<()> {
     let pool = MySqlPool::connect(&env::var("DATABASE_URL").unwrap()).await.unwrap();
