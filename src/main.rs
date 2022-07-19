@@ -18,7 +18,7 @@ async fn insert(pool: web::Data<MySqlPool>) -> impl Responder {
 
 #[get("/select")]
 async fn select(pool: web::Data<MySqlPool>) -> impl Responder {
-    println!("{}", pool.fetch_all("SELECT * FROM Hello;").await);
+    println!("{}", pool.fetch("SELECT * FROM Hello;").await);
     "Created"
 }
 
