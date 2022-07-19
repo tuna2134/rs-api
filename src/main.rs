@@ -14,8 +14,7 @@ async fn main() -> std::io::Result<()> {
     let pool = MySqlPool::connect(&env::var("DATABASE_URL").unwrap()).await.unwrap();
     HttpServer::new(move || {
         App::new()
-            .route("/hello", web::get().to(|| async { "Hello World!" }))
-            .service(greet)
+            .service(create)
             .app_data(web::Data::new(pool.clone()))
     })
     .bind(("127.0.0.1", 8080))?
