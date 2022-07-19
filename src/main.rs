@@ -17,7 +17,7 @@ async fn insert(pool: web::Data<MySqlPool>) -> impl Responder {
 }
 
 #[get("/select")]
-async fn insert(pool: web::Data<MySqlPool>) -> impl Responder {
+async fn select(pool: web::Data<MySqlPool>) -> impl Responder {
     println!(pool.fetch_all("SELECT * FROM Hello;").await);
     "Created"
 }
@@ -29,6 +29,7 @@ async fn main() -> std::io::Result<()> {
         App::new()
             .service(create)
             .service(insert)
+            .service(select)
             .app_data(web::Data::new(pool.clone()))
     })
     .bind(("127.0.0.1", 8080))?
